@@ -4,6 +4,7 @@
     "next/typescript"
   ],
   "ignorePatterns": [
-    "src/components/ui/*"
+    "src/components/ui/*",
+    "src/hooks/use-toast.ts"
   ]
 }
