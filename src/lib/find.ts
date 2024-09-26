@@ -1,4 +1,4 @@
-import { Row } from "@/app/tables/air"
+import { Row } from "@/app/tables/thermodynamics"
 
 export const find = (measurments: Row[], target: number): Row[] | undefined => {
     if (measurments.length === 0) {

@@ -1,4 +1,4 @@
-import { Row } from "@/app/tables/air";
+import { Row } from "@/app/tables/thermodynamics";
 
 export const interpolate = (low: Row, high: Row, value: number): Row | undefined => {
 
