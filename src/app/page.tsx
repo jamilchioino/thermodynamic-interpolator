@@ -83,8 +83,8 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center p-8">
-      <main className="min-w-full md:min-w-[700px]">
+    <div className="flex flex-col justify-between items-center h-screen p-2 ">
+      <main className="min-w-full md:min-w-[700px] p-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mb-8">
             <FormField
@@ -195,6 +195,9 @@ export default function Home() {
         </Table>
         }
       </main >
+      <footer>
+        <p className="text-xs font-small text-muted-foreground">Hecho por <a href="https://github.com/jamilchioino" title="thermodynamics icons">Jamil Chioino</a>. Logo de <a href="https://www.flaticon.com/free-icon/thermodynamics_6813621" title="thermodynamics icons">Freepik - Flaticon</a> </p>
+      </footer>
     </div >
   );
 }
