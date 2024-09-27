@@ -178,7 +178,7 @@ export default function Home() {
                 </TableRow>
                 {tableColumnNames.map((name, index) =>
                 (
-                  <TableRow onClick={() => copyToClipboard(table.data[index])}>
+                  <TableRow key={index} onClick={() => copyToClipboard(table.data[index])}>
                     <TableCell>{name}</TableCell>
                     <TableCell className="text-right" >{table.data[index] === null ? "NA" : table.data[index].toFixed(4)}</TableCell>
                   </TableRow>
