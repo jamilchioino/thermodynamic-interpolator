@@ -39,6 +39,23 @@ export default function Home() {
   const [table, setTable] = useState<State>();
   const { toast } = useToast()
 
+  const tableColumnNames =
+    [
+      "Presión de saturación Psat, kPa",
+      "Densidad ρ, kg/m³ Líquido",
+      "Densidad ρ, kg/m³ Vapor",
+      "Entalpía de vaporización hfg, kJ/kg",
+      "Calor específico cp J/kg · K Líquido",
+      "Calor específico cp J/kg · K Vapor",
+      "Conductividad térmica k, W/m · K Líquido",
+      "Conductividad térmica k, W/m · K Vapor",
+      "Viscosidad dinámica μ, kg/m · s Líquido(x 10³)",
+      "Viscosidad dinámica μ, kg/m · s Vapor(x 10⁵)",
+      "Número de Prandtl Pr Líquido",
+      "Número de Prandtl Pr Vapor",
+      "Coeficiente de expansión volumétrica β, 1/K Líquido (x 10³)"
+    ]
+
   const transitions = useTransition(table, {
     from: {
       opacity: 0,
@@ -156,58 +173,13 @@ export default function Home() {
                   <TableCell>Temp. T, °C</TableCell>
                   <TableCell className="text-right">{table.target}</TableCell>
                 </TableRow>
-                <TableRow onClick={() => copyToClipboard(table.data[0])}>
-                  <TableCell>Presión de saturación Psat, kPa</TableCell>
-                  <TableCell className="text-right" >{table.data[0].toFixed(4)}</TableCell>
-                </TableRow>
-                <TableRow onClick={() => copyToClipboard(table.data[1])}>
-                  <TableCell>Densidad ρ, kg/m³ Líquido</TableCell>
-                  <TableCell className="text-right">{table.data[1].toFixed(4)}</TableCell>
-                </TableRow>
-                <TableRow onClick={() => copyToClipboard(table.data[2])}>
-                  <TableCell>Densidad ρ, kg/m³ Líquido</TableCell>
-                  <TableCell className="text-right">{table.data[2].toFixed(4)}</TableCell>
-                </TableRow>
-                <TableRow onClick={() => copyToClipboard(table.data[3])}>
-                  <TableCell>Entalpía de vaporización hfg, kJ/kg</TableCell>
-                  <TableCell className="text-right">{table.data[3].toFixed(4)}</TableCell>
-                </TableRow>
-                <TableRow onClick={() => copyToClipboard(table.data[4])}>
-                  <TableCell>Calor específico cp J/kg · K Líquido</TableCell>
-                  <TableCell className="text-right">{table.data[4].toFixed(4)}</TableCell>
-                </TableRow>
-                <TableRow onClick={() => copyToClipboard(table.data[5])}>
-                  <TableCell>Calor específico cp J/kg · K Vapor </TableCell>
-                  <TableCell className="text-right">{table.data[5].toFixed(4)}</TableCell>
-                </TableRow>
-                <TableRow onClick={() => copyToClipboard(table.data[6])}>
-                  <TableCell>Conductividad térmica k, W/m · K Líquido </TableCell>
-                  <TableCell className="text-right">{table.data[6].toFixed(4)}</TableCell>
-                </TableRow>
-                <TableRow onClick={() => copyToClipboard(table.data[7])}>
-                  <TableCell>Conductividad térmica k, W/m · K Vapor </TableCell>
-                  <TableCell className="text-right">{table.data[7].toFixed(4)}</TableCell>
-                </TableRow>
-                <TableRow onClick={() => copyToClipboard(table.data[8])}>
-                  <TableCell>Viscosidad dinámica μ, kg/m · s Líquido(x 10³) </TableCell>
-                  <TableCell className="text-right">{table.data[8].toFixed(4)}</TableCell>
-                </TableRow>
-                <TableRow onClick={() => copyToClipboard(table.data[9])}>
-                  <TableCell>Viscosidad dinámica μ, kg/m · s Vapor(x 10⁵) </TableCell>
-                  <TableCell className="text-right">{table.data[9].toFixed(4)}</TableCell>
-                </TableRow>
-                <TableRow onClick={() => copyToClipboard(table.data[10])}>
-                  <TableCell>Número de Prandtl Pr Líquido </TableCell>
-                  <TableCell className="text-right">{table.data[10].toFixed(4)}</TableCell>
-                </TableRow>
-                <TableRow onClick={() => copyToClipboard(table.data[11])}>
-                  <TableCell>Número de Prandtl Pr Vapor </TableCell>
-                  <TableCell className="text-right">{table.data[11].toFixed(4)}</TableCell>
-                </TableRow>
-                <TableRow onClick={() => copyToClipboard(table.data[12])}>
-                  <TableCell> Coeficiente de expansión volumétrica β, 1/K Líquido (x 10³) </TableCell>
-                  <TableCell className="text-right">{table.data[12].toFixed(4)}</TableCell>
-                </TableRow>
+                {tableColumnNames.map((name, index) =>
+                (
+                  <TableRow onClick={() => copyToClipboard(table.data[index])}>
+                    <TableCell>{name}</TableCell>
+                    <TableCell className="text-right" >{table.data[index].toFixed(4)}</TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </animated.div>
