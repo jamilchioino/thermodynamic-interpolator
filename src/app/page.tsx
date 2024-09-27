@@ -29,7 +29,7 @@ import { useState } from "react";
 import { useTransition, animated } from "react-spring";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { getThermodynamicTable, Row } from "./tables/thermodynamics";
+import { getThermodynamicTable, Row, TableType } from "./tables/thermodynamics";
 
 type State = {
   target: number,
@@ -69,7 +69,10 @@ export default function Home() {
     exitBeforeEnter: true
   })
 
-  const copyToClipboard = (value: number) => {
+  const copyToClipboard = (value: number | null) => {
+    if (!value) {
+      return
+    }
     navigator.clipboard.writeText(value.toFixed(4).toString());
     toast({
       title: "Valor copiado",
@@ -94,7 +97,7 @@ export default function Home() {
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    const table = await getThermodynamicTable("air");
+    const table = await getThermodynamicTable(data.table as TableType);
     const target = +data.target
     const result = find(table, target)
 
@@ -149,7 +152,7 @@ export default function Home() {
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="air">Aire</SelectItem>
-                      <SelectItem value="agua">Agua</SelectItem>
+                      <SelectItem value="water">Agua</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormItem>
@@ -177,7 +180,7 @@ export default function Home() {
                 (
                   <TableRow onClick={() => copyToClipboard(table.data[index])}>
                     <TableCell>{name}</TableCell>
-                    <TableCell className="text-right" >{table.data[index].toFixed(4)}</TableCell>
+                    <TableCell className="text-right" >{table.data[index] === null ? "NA" : table.data[index].toFixed(4)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
