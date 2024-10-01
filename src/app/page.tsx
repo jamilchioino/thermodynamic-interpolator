@@ -38,28 +38,13 @@ import { z } from "zod"
 import { getThermodynamicTable, Row, TableType } from "./tables/thermodynamics"
 
 type State = {
+  titles: string[],
   target: number
 } & Row
 
 export default function Home() {
   const [table, setTable] = useState<State>()
   const { toast } = useToast()
-
-  const tableColumnNames = [
-    "Presión de saturación Psat, kPa",
-    "Densidad ρ, kg/m³ Líquido",
-    "Densidad ρ, kg/m³ Vapor",
-    "Entalpía de vaporización hfg, kJ/kg",
-    "Calor específico cp J/kg · K Líquido",
-    "Calor específico cp J/kg · K Vapor",
-    "Conductividad térmica k, W/m · K Líquido",
-    "Conductividad térmica k, W/m · K Vapor",
-    "Viscosidad dinámica μ, kg/m · s Líquido(x 10³)",
-    "Viscosidad dinámica μ, kg/m · s Vapor(x 10⁵)",
-    "Número de Prandtl Pr Líquido",
-    "Número de Prandtl Pr Vapor",
-    "Coeficiente de expansión volumétrica β, 1/K Líquido (x 10³)",
-  ]
 
   const transitions = useTransition(table, {
     from: {
@@ -104,20 +89,20 @@ export default function Home() {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     const table = await getThermodynamicTable(data.table as TableType)
     const target = +data.target
-    const result = find(table, target)
+    const result = find(table.rows, target)
 
     if (!result) {
       return
     }
 
     if (result.length === 1) {
-      setTable({ target, ...result[0] })
+      setTable({ titles: table.titles, target, ...result[0] })
       return
     }
 
     const interpolation = interpolate(result[0], result[1], target)
     if (interpolation) {
-      setTable({ target, ...interpolation })
+      setTable({ titles: table.titles, target, ...interpolation })
     }
   }
 
@@ -190,16 +175,16 @@ export default function Home() {
                         {table.target}
                       </TableCell>
                     </TableRow>
-                    {tableColumnNames.map((name, index) => (
+                    {table.data.map((data, index) => (
                       <TableRow
                         key={index}
                         onClick={() => copyToClipboard(table.data[index])}
                       >
-                        <TableCell>{name}</TableCell>
+                        <TableCell>{table.titles[index+1]}</TableCell>
                         <TableCell className="text-right">
-                          {table.data[index] === null
+                          {data === null
                             ? "NA"
-                            : table.data[index].toFixed(4)}
+                            : data.toFixed(4)}
                         </TableCell>
                       </TableRow>
                     ))}
