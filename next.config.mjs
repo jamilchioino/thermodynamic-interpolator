@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: "export",
-    basePath: "/thermodynamic-interpolator"
-};
+  output: "export",
+  basePath: "/thermodynamic-interpolator",
+}
 
-export default nextConfig;
-
+export default nextConfig
